@@ -1,0 +1,14 @@
+{
+    "config": {
+      "step": {
+        "user": {
+          "data": {
+            "api_token": "Mealie API Token",
+            "url": "Mealie base url"
+          },
+          "description": "Enter your Mealie base address and API key",
+          "title": "Mealie url and API Key"
+        }
+      }
+    }
+  }
