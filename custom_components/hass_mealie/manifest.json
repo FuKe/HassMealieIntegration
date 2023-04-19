@@ -1,0 +1,11 @@
+{
+  "codeowners": ["@FuKe"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/user/my_component/",
+  "domain": "hass_mealie",
+  "iot_class": "local_polling",
+  "name": "Mealie Integration",
+  "requirements": [],
+  "version": "1.0.0"
+}
