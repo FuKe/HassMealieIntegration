@@ -16,15 +16,15 @@ DATA_SCHEMA = vol.Schema(
     }
 )
 
-async def validate_input(hass: HomeAssistant, data) -> bool:
+async def validate_input(hass: HomeAssistant, data):
     """ Validate user input allows us to connect to the Mealie API """
     config_path = hass.config.path("custom_components/hass_mealie/mealie.conf")
     mealie_client = MealieClient(data[CONF_API_TOKEN], data[CONF_URL])
     
     result = await hass.async_add_executor_job(mealie_client.get_self)
-    _LOGGER.debug(f"Resposne from get_self was: ${str(result)}")
+    _LOGGER.debug(f"Response from get_self was: {str(result)}")
     
-    return True
+    return {"title": f"Mealie ({data[CONF_URL]})"}
     
     
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -33,11 +33,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     
     async def async_step_user(self, user_input=None):
         errors = {}
+        _LOGGER.debug(f"Got input: {str(user_input)}")
         
         if user_input is not None:
             try:
-                await validate_input(self.hass, user_input)
-                return self.async_create_entry(title="Mealie Integration Entry", data=user_input)
+                info = await validate_input(self.hass, user_input)
+                return self.async_create_entry(title=info["title"], data=user_input)
             except UnauthorizedException:
                 errors["base"] = "invalid_auth"
             except ConnectionFailedException:

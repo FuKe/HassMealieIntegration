@@ -24,7 +24,7 @@ class MealieClient(object):
     def get_self(self):
         request_url = self.mealie_base_url + api_path + "/users/self"
         headers = {
-            "Authorization": f"Bearer ${self.api_key}"
+            "Authorization": f"Bearer {self.api_key}"
         }
         
         try:
